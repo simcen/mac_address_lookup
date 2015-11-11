@@ -33,25 +33,28 @@ class GetMacVendor(StreamingCommand):
         for record in records:
             
             mac_address = None
+            field = None
 
             if self.field:
             	if self.field in record:
             		mac_address = record[self.field]
+            		field = self.field
             else:
             	if 'mac_address' in record:
             		mac_address = record['mac_address']
+            		field = 'mac_address'
 
-            if mac_address != None:
+            if mac_address != None and field != None:
             
-            	url = 'http://www.macvendorlookup.com/api/v2/%s' % record['mac_address']
+            	url = 'http://www.macvendorlookup.com/api/v2/%s' % mac_address
 
             	try:
                 	urlHandle = urllib.urlopen(url)
                 	content = urlHandle.read()
                 	content = json.loads(content)
 
-                	record['mac_address_vendor'] = content[0]['company']
-                	record['mac_address_vendor_country'] = content[0]['country']
+                	record[field + '_vendor'] = content[0]['company']
+                	record[field + '_vendor_country'] = content[0]['country']
 
                 except Exception as e:
 			        exc_type, exc_obj, exc_tb = sys.exc_info()
