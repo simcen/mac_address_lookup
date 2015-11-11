@@ -50,7 +50,7 @@ class GetMacVendor(StreamingCommand):
 
             	try:
                 	urlHandle = urllib.urlopen(url)
-                	if urlHandle.getcode() = 200:
+                	if urlHandle.getcode() == 200:
                 		content = urlHandle.read()
                 		content = json.loads(content)
 
