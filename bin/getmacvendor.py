@@ -50,11 +50,12 @@ class GetMacVendor(StreamingCommand):
 
             	try:
                 	urlHandle = urllib.urlopen(url)
-                	content = urlHandle.read()
-                	content = json.loads(content)
+                	if urlHandle.getcode() = 200:
+                		content = urlHandle.read()
+                		content = json.loads(content)
 
-                	record[field + '_vendor'] = content[0]['company']
-                	record[field + '_vendor_country'] = content[0]['country']
+                		record[field + '_vendor'] = content[0]['company']
+                		record[field + '_vendor_country'] = content[0]['country']
 
                 except Exception as e:
 			        exc_type, exc_obj, exc_tb = sys.exc_info()
